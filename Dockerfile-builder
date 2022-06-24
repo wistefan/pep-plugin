@@ -1,0 +1,9 @@
+FROM kong/go-plugin-tool:2.0.4-alpine-latest AS builder
+
+RUN mkdir -p /tmp/pep-plugin/
+COPY . /tmp/pep-plugin/
+# Build the plugin.
+RUN cd /tmp/pep-plugin/
+RUN go get github.com/Kong/go-pdk
+RUN go mod init pep-plugin
+RUN go build -buildmode plugin main.go
